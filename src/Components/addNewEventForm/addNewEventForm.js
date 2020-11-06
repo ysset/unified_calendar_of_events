@@ -1,7 +1,7 @@
 import React from "react";
 import {Container} from "@material-ui/core";
 
-function addNewEventForm() {
+export default function addNewEventForm() {
  return(
      <>
          <Container>
@@ -41,7 +41,6 @@ function addNewEventForm() {
                  required
 
              />
-
          </Container>
      </>
  )
