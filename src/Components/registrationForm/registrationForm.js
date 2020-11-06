@@ -2,6 +2,7 @@ import React from "react";
 import {Container, Input} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import {NavLink} from "react-router-dom";
 
 export default function registrationForm() {
  return(
@@ -92,19 +93,44 @@ export default function registrationForm() {
              </Grid>
              <Grid
                  container
-                 direction={'column'}
-                 alignItems="flex-end"
+                 direction={'row'}
+                 justify={"space-between"}
+                 alignItems="center"
              >
-                 <Button
-                     style={{
-                         marginTop: 50,
-                         marginRight: 250
-                     }}
-                     variant="outlined"
-                     color="primary"
+                 <Grid
+                     item
                  >
-                     Primary
-                 </Button>
+                     <Button
+                         style={{
+                             marginTop: 50,
+                             marginLeft: 250
+                         }}
+                         variant="outlined"
+                         color="secondary"
+                     >
+                         <NavLink
+                             to={'/authForm'}
+                             style={{
+                                 color: '#fff',
+                                 textDecoration: 'none',
+                             }}
+                         > Sign in </NavLink>
+                     </Button>
+                 </Grid>
+                 <Grid
+                     item
+                 >
+                     <Button
+                         style={{
+                             marginTop: 50,
+                             marginRight: 250
+                         }}
+                         variant={"contained"}
+                         color="primary"
+                     >
+                         Authenticated
+                     </Button>
+                 </Grid>
              </Grid>
          </Container>
      </>

@@ -36,7 +36,7 @@ export default function ButtonAppBar() {
                     </Typography>
                     <Button color="inherit">
                         <NavLink
-                            to={'/eventForm'}
+                            to={'/regForm'}
                             style={{
                                 color: '#fff',
                                 textDecoration: 'none',
