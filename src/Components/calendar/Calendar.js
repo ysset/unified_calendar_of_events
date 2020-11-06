@@ -4,21 +4,34 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import {Container} from "@material-ui/core";
-import interactionPlugin from "@fullcalendar/interaction"
+import interactionPlugin from "@fullcalendar/interaction";
 
 import events from "../events/Events";
 
-import "@fullcalendar/daygrid/main.css"
-import "@fullcalendar/timegrid/main.css"
+import "@fullcalendar/daygrid/main.css";
+import "@fullcalendar/timegrid/main.css";
 
-function handleDateClick(arg) {
-    console.log(arg)
+function handleDateClick(e) {
+
+    console.log(e.fooo)
 }
 
-
-
 export default function Calendar() {
-    return(
+    let isAuth = true;
+
+    if (isAuth) {
+        handleDateClick(isAuth)
+        handleDateClick({
+            foo: "bar",
+            fooo: [
+                "jhdg",
+                "kjdfg"
+            ],
+            gft: "dfjg"
+        })
+    }
+
+    return (
         <>
             <Container style={{
                 paddingTop: 20
@@ -31,7 +44,7 @@ export default function Calendar() {
                         end: "dayGridMonth,timeGridWeek,timeGridDay"
                     }}
                     footerToolbar={true}
-                    plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     eventClick={handleDateClick} // on event click
                     dateClick={handleDateClick} // on date click
                     selectable={true}

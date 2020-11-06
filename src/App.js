@@ -1,10 +1,9 @@
 import React from 'react'
 
-import {useMediaQuery, CssBaseline} from "@material-ui/core";
+import {useMediaQuery, CssBaseline, Box} from "@material-ui/core";
 import { createMuiTheme, ThemeProvider} from "@material-ui/core/styles"
 
 import CalendarPage from "./Components/calendar/Calendar"
-
 
 function App(){
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)')
