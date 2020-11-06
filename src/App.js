@@ -3,7 +3,9 @@ import React from 'react'
 import {useMediaQuery, CssBaseline, Box} from "@material-ui/core";
 import { createMuiTheme, ThemeProvider} from "@material-ui/core/styles"
 
+import Routes from './Components/routes/Routes'
 import CalendarPage from "./Components/calendar/Calendar"
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
 function App(){
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)')
@@ -18,10 +20,15 @@ function App(){
 
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <CssBaseline/>
-                <CalendarPage/>
-            </ThemeProvider>
+
+            <BrowserRouter>
+                <Switch>
+                    <Routes/>
+                    <ThemeProvider theme={theme}>
+                        <CssBaseline/>
+                    </ThemeProvider>
+                </Switch>
+            </BrowserRouter>
         </>
     );
 
