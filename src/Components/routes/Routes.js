@@ -1,6 +1,6 @@
 import React from "react";
 
-import AddNewEventForm from '../addNewEventForm/addNewEventForm'
+import AddNewEventForm from '../addNewEventForm/registrationForm'
 import CalendarPage from '../calendar/Calendar'
 import ButtonAppBar from '../appHeader/appHeader'
 
