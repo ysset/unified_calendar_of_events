@@ -41,7 +41,17 @@ export default function ButtonAppBar() {
                                 color: '#fff',
                                 textDecoration: 'none',
                             }}
-                        > Login </NavLink>
+                        > Sign in </NavLink>
+                    </Button>
+
+                    <Button color="inherit">
+                        <NavLink
+                            to={'/EventForm'}
+                            style={{
+                                color: '#fff',
+                                textDecoration: 'none',
+                            }}
+                        > EventForm </NavLink>
                     </Button>
                 </Toolbar>
             </AppBar>

@@ -132,6 +132,7 @@ export default function registrationForm() {
                      </Button>
                  </Grid>
              </Grid>
+
          </Container>
      </>
  )
