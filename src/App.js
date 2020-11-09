@@ -7,7 +7,7 @@ import Routes from './Components/routes/Routes'
 import {BrowserRouter, Switch} from 'react-router-dom'
 
 function App() {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)')
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
     const theme = React.useMemo(() => createMuiTheme({
             palette: {
@@ -23,7 +23,7 @@ function App() {
                 <Switch>
                     <ThemeProvider theme={theme}>
                         <CssBaseline/>
-                    <Routes/>
+                        <Routes/>
                     </ThemeProvider>
                 </Switch>
             </BrowserRouter>

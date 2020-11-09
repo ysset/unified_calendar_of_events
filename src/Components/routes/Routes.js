@@ -15,7 +15,7 @@ export  default function Routes() {
             <Route exact path={'/'} component={ButtonAppBar}/>
             <Route exact path={'/'} component={CalendarPage}/>
             <Route exact path={'/authForm'} component={authForm}/>
-            <Route exact path={'/EventForm'} component={EventForm()}/>
+            <Route exact path={'/eventForm'} component={EventForm}/>
         </>
     )
 }
