@@ -4,7 +4,7 @@ import {Container, Input} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
 
-export default function () {
+export default function Auth() {
 
     return (
         <>
@@ -45,8 +45,6 @@ export default function () {
                         container
                         direction={"row-reverse"}
                         justify={"space-around"}
-
-
                     >
                         <Button
                             style={{
@@ -77,9 +75,6 @@ export default function () {
                         </Button>
 
                     </Grid>
-
-
-
                 </Grid>
             </Container>
         </>

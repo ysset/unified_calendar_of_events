@@ -4,6 +4,7 @@ const events = [
     {
         title: "few hours event",
         start: getDate("2020-11-01T10:30:00"),
+        type: 'sport'
     },
     {
         title: " Long Event", //Название
@@ -11,24 +12,33 @@ const events = [
         end: getDate("YEAR-MONTH-10") // Дата окончания
     },
     {
-        groupId: " 999",
-        title: "Repeating Event",
-        start: getDate("YEAR-MONTH-09T16:00:00")
+        title: " Long Event", //Название
+        start: getDate("YEAR-10-07"), // Дата начала
+        end: getDate("YEAR-MONTH-10") // Дата окончания
     },
     {
         groupId: " 999",
         title: "Repeating Event",
-        start: getDate("YEAR-MONTH-16T16:00:00")
+        start: getDate("YEAR-MONTH-09T16:00:00"),
+        type: 'sport'
+    },
+    {
+        groupId: " 999",
+        title: "Repeating Event",
+        start: getDate("YEAR-MONTH-16T16:00:00"),
+        type: 'sport'
     },
     {
         title: " Conference",
-        start: "YEAR-MONTH-17",
-        end: getDate("YEAR-MONTH-19")
+        start: getDate("YEAR-MONTH-17"),
+        end: getDate("YEAR-MONTH-19T16:00:00"),
+        type: 'sport'
     },
     {
         title: "Meeting",
         start: getDate("YEAR-MONTH-18T10:30:00"),
-        end: getDate("YEAR-MONTH-18T12:30:00")
+        end: getDate("YEAR-MONTH-18T12:30:00"),
+        type: 'sport'
     },
     { title: " Lunch", start: getDate("YEAR-MONTH-18T12:00:00") },
     { title: " Birthday Party", start: getDate("YEAR-MONTH-19T07:00:00") },
