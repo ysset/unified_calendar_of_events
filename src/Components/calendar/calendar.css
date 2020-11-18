@@ -1,7 +1,7 @@
 
 .tail-datetime-calendar {
-    width: 55%;
-    height: 70%;
+    width: auto;
+    height: auto;
     margin: 15px;
     padding: 0;
     display: block;
@@ -73,12 +73,6 @@
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC\
     9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDEyIDE2Ij48cGF0aCBmaWxsPSIjZmZmZmZmIiBkP\
     SJNMTIgNWwtOCA4LTQtNCAxLjUtMS41TDQgMTBsNi41LTYuNUwxMiA1eiIvPjwvc3ZnPg==");
-}
-.tail-datetime-calendar .calendar-navi span.button-close {
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC\
-    9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDEyIDE2Ij48cGF0aCBmaWxsPSIjZmZmZmZmIiBkP\
-    SJNNy40OCA4bDMuNzUgMy43NS0xLjQ4IDEuNDhMNiA5LjQ4bC0zLjc1IDMuNzUtMS40OC0xLjQ4TDQuNTIgOCAuNzcgNC4y\
-    NWwxLjQ4LTEuNDhMNiA2LjUybDMuNzUtMy43NSAxLjQ4IDEuNDhMNy40OCA4eiIvPjwvc3ZnPg==");
 }
 .tail-datetime-calendar .calendar-date {
     margin: 0;
@@ -164,7 +158,7 @@
 }
 /* Select A Month */
 .tail-datetime-calendar .calendar-date table.calendar-month tbody tr > * {
-    width: 81.66666666666667px;
+    /*width: 81.66666666666667px;*/
     padding: 5px;
     line-height: 25px;
 }

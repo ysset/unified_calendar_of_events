@@ -1,50 +1,53 @@
 
 const events = [
-    { title: " All Day Event", start: getDate("YEAR-MONTH-01")},
     {
-        title: "few hours event",
+        title: "sport", // Тим мероприятия
+        start: getDate("YEAR-MONTH-01")},
+    {
+        title: "sport",
         start: getDate("2020-11-01T10:30:00"),
         type: 'sport'
     },
     {
-        title: " Long Event", //Название
+        title: "sport",
         start: getDate("YEAR-MONTH-07"), // Дата начала
         end: getDate("YEAR-MONTH-10") // Дата окончания
     },
     {
-        title: " Long Event", //Название
+        title: "sport",
         start: getDate("YEAR-10-07"), // Дата начала
         end: getDate("YEAR-MONTH-10") // Дата окончания
     },
     {
-        groupId: " 999",
-        title: "Repeating Event",
+        title: "sport",
         start: getDate("YEAR-MONTH-09T16:00:00"),
         type: 'sport'
     },
     {
-        groupId: " 999",
-        title: "Repeating Event",
+        title: "sport",
         start: getDate("YEAR-MONTH-16T16:00:00"),
         type: 'sport'
     },
     {
-        title: " Conference",
+        title: "sport",
         start: getDate("YEAR-MONTH-17"),
         end: getDate("YEAR-MONTH-19T16:00:00"),
         type: 'sport'
     },
     {
-        title: "Meeting",
+        title: "sport",
         start: getDate("YEAR-MONTH-18T10:30:00"),
         end: getDate("YEAR-MONTH-18T12:30:00"),
         type: 'sport'
     },
-    { title: " Lunch", start: getDate("YEAR-MONTH-18T12:00:00") },
-    { title: " Birthday Party", start: getDate("YEAR-MONTH-19T07:00:00") },
-    { title: " Meeting", start: getDate("YEAR-MONTH-18T14:30:00") },
-    { title: " Happy Hour", start: getDate("YEAR-MONTH-18T17:30:00") },
-    { title: " Dinner", start: getDate("YEAR-MONTH-18T20:00:00") },
+    {
+        title: "sport",
+        start: getDate("YEAR-MONTH-18T12:00:00")
+    },
+    {
+        title: "sport",
+        start: getDate("YEAR-MONTH-19T07:00:00")
+    }
     ];
 function getDate(dayString) {
     const today = new Date();

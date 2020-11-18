@@ -5,8 +5,11 @@ import "./calendar.css";
 import {Box, Container} from "@material-ui/core";
 
 import events from '../events/Events'
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {getState} from "../../Redux/Reducer";
 
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
     weekdayshort = moment.weekdaysShort();
 
     state = {
@@ -15,7 +18,8 @@ export default class Calendar extends React.Component {
         showDateTable: true,
         dateObject: moment(), // Текущий месяц(Выбранный в календаре).
         allmonths: moment.months(),
-        selectedDay: null
+        selectedDay: null,
+        currentDayEvents: []
     };
     daysInMonth = () => {
         return this.state.dateObject.daysInMonth();
@@ -39,7 +43,7 @@ export default class Calendar extends React.Component {
     showMonth = (e, month) => {
         this.setState({
             showMonthTable: !this.state.showMonthTable,
-            showDateTable: !this.state.showDateTable
+            // showDateTable: !this.state.showDateTable
         });
     };
     setMonth = month => {
@@ -50,10 +54,11 @@ export default class Calendar extends React.Component {
         this.setState({
             dateObject: dateObject,
             showMonthTable: !this.state.showMonthTable,
-            showDateTable: !this.state.showDateTable
+            // showDateTable: !this.state.showDateTable
         });
     };
     MonthList = props => {
+        console.log('here')
         let months = [];
         props.data.map(data => {
             months.push(
@@ -99,7 +104,7 @@ export default class Calendar extends React.Component {
     showYearTable = e => {
         this.setState({
             showYearTable: !this.state.showYearTable,
-            showDateTable: !this.state.showDateTable
+            // showDateTable: !this.state.showDateTable
         });
     };
 
@@ -140,8 +145,8 @@ export default class Calendar extends React.Component {
     };
 
     getDates(startDate, stopDate) {
-        var dateArray = [];
-        var currentDate = moment(startDate);
+        let dateArray = [];
+        let currentDate = moment(startDate);
         var stopDate = moment(stopDate);
         while (currentDate <= stopDate) {
             dateArray.push(moment(currentDate).format("YYYY"));
@@ -200,13 +205,20 @@ export default class Calendar extends React.Component {
             </table>
         );
     };
-    onDayClick = (e, d) => {
+    onDayClick = (e, d, currentMonthEvents) => {
         this.setState(
             {
                 selectedDay: d
             },
             () => {
+                this.state.currentDayEvents = []
                 console.log("SELECTED DAY: ", this.state.selectedDay);
+                currentMonthEvents.map((event) => {
+                    if (event !== null && this.state.selectedDay === moment(event.start).date()) {
+                        this.state.currentDayEvents.push(event)
+                        console.log(this.state.currentDayEvents)
+                    }
+                })
             }
         );
     };
@@ -221,22 +233,32 @@ export default class Calendar extends React.Component {
         }
         let daysInMonth = [];
         //============================================
-            let currentEvent = events.map((eventDate) => {
+            let currentMonthEvents = events.map((eventDate) => {
                     //2020-11-01T10:30:00 шаблон времени
-                    console.log(moment(eventDate.start).month() === moment(this.state.dateObject).month())
-                    return eventDate
+                return  moment(eventDate.start).month() === moment(this.state.dateObject).month() ? eventDate : null
             })
-        console.log(currentEvent)
+        console.log(currentMonthEvents)
         for (let d = 1; d <= this.daysInMonth(); d++) {
             // let currentDay = d == this.currentDay() ? "today" : "";
             daysInMonth.push(
-                <td key={d} >
+                <td
+                    style={{
+                        paddingRight: 5,
+                        paddingLeft: 5,
+                        border: 1,
+                        borderColor: "red",
+                    }}
+                    key={d} >
                     <Box
                         style={{
-                            height: 100
+                            minHeight: 100,
+                            height: "auto",
+                            width: 150,
+                            borderColor: "black",
+                            border: 2
                         }}
                         onClick={e => {
-                            this.onDayClick(e, d);
+                            this.onDayClick(e, d, currentMonthEvents);
                         }}
                     >
                         <span
@@ -244,12 +266,20 @@ export default class Calendar extends React.Component {
                                 textAlign: "start"
                             }}
                         >{d}</span>
-                        <span>
-                            {currentEvent.title}
-                        </span>
-                        <span>
-                            {currentEvent.start}
-                        </span>
+                        <p>
+                            {currentMonthEvents.map(event => {
+                                if(event !== null && d === moment(event.start).date()){
+                                    return `${event.title}`
+                                }
+                            })}
+                        </p>
+                        <p>
+                            {currentMonthEvents.map(event => {
+                                if(event !== null && d === moment(event.start).date()){
+                                    return `${event.start}`
+                                }
+                            })}
+                        </p>
                     </Box>
                 </td>
             );
@@ -274,7 +304,10 @@ export default class Calendar extends React.Component {
         });
 
         let daysinmonth = rows.map((d, i) => {
-            return <tr>{d}</tr>;
+            return <tr style={{
+                border: 10
+            }}
+            >{d}</tr>;
         });
 
         return (
@@ -287,7 +320,7 @@ export default class Calendar extends React.Component {
                         }}
                         className="calendar-button button-prev"
                     />
-                        {!this.state.showMonthTable && (
+                        {/*{!this.state.showMonthTable && (*/}
                             <span
                                 onClick={e => {
                                     this.showMonth();
@@ -296,7 +329,7 @@ export default class Calendar extends React.Component {
                             >
                             {this.month()}
                         </span>
-                        )}
+                        {/*)}*/}
                         <span className="calendar-label" onClick={e => this.showYearTable()}>
                         {this.year()}
                     </span>
@@ -331,3 +364,15 @@ export default class Calendar extends React.Component {
         );
     }
 }
+const mapStateToProps = state => ({
+    state: getState(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    //any async func :)
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Calendar);
