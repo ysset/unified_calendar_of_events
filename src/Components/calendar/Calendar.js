@@ -22,7 +22,7 @@ class Calendar extends React.Component {
         dateObject: moment(), // Текущий месяц(Выбранный в календаре).
         allmonths: moment.months(),
         selectedDay: null,
-        currentDayEvents: [],
+        currentDayEvents: null,
         redirectToSingleDay: false
     };
     daysInMonth = () => {
@@ -224,6 +224,7 @@ class Calendar extends React.Component {
                     }
                 })
                 this.props.sendInfo(this.state.currentDayEvents)
+                this.state.currentDayEvents[0] !== undefined &&
                 this.setState({
                     redirectToSingleDay: true
                 })
@@ -278,13 +279,6 @@ class Calendar extends React.Component {
                             {currentMonthEvents.map(event => {
                                 if(event !== null && d === moment(event.start).date()){
                                     return `${event.title}`
-                                }
-                            })}
-                        </p>
-                        <p>
-                            {currentMonthEvents.map(event => {
-                                if(event !== null && d === moment(event.start).date()){
-                                    return `${event.start}`
                                 }
                             })}
                         </p>

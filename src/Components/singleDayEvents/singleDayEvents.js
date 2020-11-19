@@ -1,24 +1,17 @@
 import React, {useState} from "react";
+
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from '@fullcalendar/daygrid'
 import {getState} from "../../Redux/Reducer";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Button, Container} from "@material-ui/core";
 import moment from "moment";
-
-import interactionPlugin from '@fullcalendar/interaction'
-import timeGridPlugin from '@fullcalendar/timegrid'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import {sendSingleDayEventsInformation} from "../../Redux/Actions";
 
 const SingleDayEvents = props => {
-    let state = {
-        weekendsVisible: true,
-        currentEvents: []
-    }
 
-    console.log(moment(props.state.singleDayEvents[0].start))
+    console.log(props.state.singleDayEvents)
 
     return(
         <>
@@ -32,6 +25,13 @@ const SingleDayEvents = props => {
                     selectable={true}
                     selectMirror={true}
                     dayMaxEvents={true}
+                    resources={[
+                        {
+                            id: 'sport',
+                            title: 'Дворец спорта'
+                        }
+                    ]}
+                    events={props.state.singleDayEvents}
                     /* you can update a remote database when these fire:
                     eventAdd={function(){}}
                     eventChange={function(){}}

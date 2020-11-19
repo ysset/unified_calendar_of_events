@@ -1,52 +1,88 @@
 
 const events = [
     {
-        title: "sport", // Тим мероприятия
-        start: getDate("YEAR-MONTH-01")},
+        title: "Баскетбол", // Имя мероприятия
+        start: getDate("YEAR-MONTH-01"),
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
+    },
     {
-        title: "sport",
+        title: "Футбол",
         start: getDate("2020-11-01T10:30:00"),
-        type: 'sport'
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
+        title: "Хоккей",
         start: getDate("YEAR-MONTH-07"), // Дата начала
-        end: getDate("YEAR-MONTH-10") // Дата окончания
+        end: getDate("YEAR-MONTH-10"),// Дата окончания
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
+        title: "Футбол",
         start: getDate("YEAR-10-07"), // Дата начала
-        end: getDate("YEAR-MONTH-10") // Дата окончания
+        end: getDate("YEAR-MONTH-10"),// Дата окончания
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
+        title: "Баскетбол",
         start: getDate("YEAR-MONTH-09T16:00:00"),
-        type: 'sport'
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
+        title: "Футбол",
         start: getDate("YEAR-MONTH-16T16:00:00"),
-        type: 'sport'
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
+        title: "Баскетбол",
         start: getDate("YEAR-MONTH-17"),
         end: getDate("YEAR-MONTH-19T16:00:00"),
-        type: 'sport'
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
+        title: "Футбол",
         start: getDate("YEAR-MONTH-18T10:30:00"),
         end: getDate("YEAR-MONTH-18T12:30:00"),
-        type: 'sport'
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
-        start: getDate("YEAR-MONTH-18T12:00:00")
+        title: "Хоккей",
+        start: getDate("YEAR-MONTH-18T12:00:00"),
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
+    },,
+    {
+        title: "Хоккей",
+        start: getDate("YEAR-MONTH-18T15:00:00"),
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
+    },,
+    {
+        title: "Хоккей",
+        start: getDate("YEAR-MONTH-18T1:00:00"),
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
     },
     {
-        title: "sport",
-        start: getDate("YEAR-MONTH-19T07:00:00")
+        title: "Хоккей",
+        start: getDate("YEAR-MONTH-19T07:00:00"),
+        end: getDate("YEAR-MONTH-18T19:30:00"),
+        type: 'sport',
+        resourceId: 'sport'
     }
     ];
 function getDate(dayString) {
