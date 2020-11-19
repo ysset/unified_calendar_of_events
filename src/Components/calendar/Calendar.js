@@ -9,6 +9,9 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getState} from "../../Redux/Reducer";
 
+import {sendSingleDayEventsInformation} from '../../Redux/Actions'
+import {Redirect} from "react-router";
+
 class Calendar extends React.Component {
     weekdayshort = moment.weekdaysShort();
 
@@ -19,7 +22,8 @@ class Calendar extends React.Component {
         dateObject: moment(), // Текущий месяц(Выбранный в календаре).
         allmonths: moment.months(),
         selectedDay: null,
-        currentDayEvents: []
+        currentDayEvents: [],
+        redirectToSingleDay: false
     };
     daysInMonth = () => {
         return this.state.dateObject.daysInMonth();
@@ -219,6 +223,10 @@ class Calendar extends React.Component {
                         console.log(this.state.currentDayEvents)
                     }
                 })
+                this.props.sendInfo(this.state.currentDayEvents)
+                this.setState({
+                    redirectToSingleDay: true
+                })
             }
         );
     };
@@ -312,6 +320,7 @@ class Calendar extends React.Component {
 
         return (
             <Container>
+                {this.state.redirectToSingleDay && <Redirect to={'/singleDayEvents'}/>}
                 <div className="tail-datetime-calendar">
                     <div className="calendar-navi">
                     <span
@@ -370,6 +379,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     //any async func :)
+    sendInfo:(e) => dispatch(sendSingleDayEventsInformation(e))
 }, dispatch)
 
 export default connect(
