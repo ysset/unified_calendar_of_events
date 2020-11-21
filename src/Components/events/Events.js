@@ -144,6 +144,7 @@ const events = [
         ]
     },
     {
+        userEmail: 'EKS@gmail.com',
         title: "Хоккей",
         start: getDate("YEAR-MONTH-19T07:00:00"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -157,6 +158,7 @@ const events = [
         ]
     },
     {
+        userEmail: 'EKS@gmail.com',
         title: "Опера",
         start: getDate("YEAR-MONTH-05T12:00:00"),
         end: getDate("YEAR-MONTH-05T19:30:00"),
@@ -170,6 +172,7 @@ const events = [
         ]
     },
     {
+        userEmail: 'EKS@gmail.com',
         title: "Театральное выступление",
         start: getDate("YEAR-MONTH-04T15:00:00"),
         end: getDate("YEAR-MONTH-04T19:30:00"),
@@ -183,6 +186,7 @@ const events = [
         ]
     },
     {
+        userEmail: 'EKS@gmail.com',
         title: "Речь мэра",
         start: getDate("YEAR-MONTH-05T12:00:00"),
         end: getDate("YEAR-MONTH-05T19:30:00"),
@@ -196,6 +200,7 @@ const events = [
         ]
     },
     {
+        userEmail: 'EKS@gmail.com',
         title: "Выступление группы Нервы",
         start: getDate("YEAR-MONTH-04T07:00:00"),
         end: getDate("YEAR-MONTH-04T19:30:00"),

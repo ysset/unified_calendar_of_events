@@ -1,12 +1,15 @@
 import React from "react";
 
-import {Container, Input} from "@material-ui/core";
+import {Container, Input, TextField, TextareaAutosize} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
+import {getState} from "../../Redux/Reducer";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
-export default function EventForm() {
+function EventForm(props) {
+    const userData = props.state.userData
 
     // Сфера события
     const eventArr = [
@@ -18,19 +21,6 @@ export default function EventForm() {
         },
         {
             title: "Maneger 3"
-        }
-    ]
-
-        // целевая аудитория
-    const audience = [
-        {
-            title: 'audience 1',
-        },
-        {
-            title: 'audience 2'
-        },
-        {
-            title: "audience 3"
         }
     ]
 
@@ -47,7 +37,7 @@ export default function EventForm() {
         }
     ]
 
-        //возрастные ограничения
+    //возрастные ограничения
     const age = [
         {
             title: 'Без ограничений',
@@ -106,6 +96,12 @@ export default function EventForm() {
         }
     ]
 
+    const organizerName = userData.fullName !== undefined ? userData.fullName : ''
+    const organizerPhone = userData.userPhone !== undefined ? userData.userPhone : ''
+    const organizerEmail = userData.userEmail !== undefined ? userData.userEmail : ''
+
+
+
     return (
         <Container>
             <Grid
@@ -115,137 +111,231 @@ export default function EventForm() {
                 alignItems="center"
             >
 
-                <p style={{
-                    fontSamily: 'Times New Roman',
-                    fontSize: "250%",
-                    fontFamily: "Verdana",
+                <h1 style={{
                     fontsSize: "11pt",
                 }}>
                     Добавить Событие
-                </p>
+                </h1>
 
-                <Input
+                <Grid
+                    container
+                    direction={"row"}
+                    justify={"center"}
+                    alignItems={"center"}
+                >
+                    <Grid
+                        style={{
+                            margin: 10,
+                            width:'40%'
+                        }}
+                        container
+                        direction={"column"}
+                        justify={"center"}
+                        alignItems={"center"}
+                    >
+                        <Input
+                            style={{
+                                width: 300,
+                                margin: 10
+                            }}
+                            placeholder={"Название Мероприятия"}
+                            required
+                        />
+
+                        {/*навесить функционал карты*/}
+                        <Input
+                            style={{
+                                width: 300,
+                                margin: 10
+                            }}
+                            placeholder={"Место проведения"}
+                            required
+                        />
+                    </Grid>
+
+                    <Grid
+                        style={{
+                            margin: 10,
+                            width:'40%'
+                        }}
+                        container
+                        direction={"column"}
+                        justify={"center"}
+                        alignItems={"center"}
+                    >
+                        {/*организатор, допили автозаполнения с сервера*/}
+                        <Input
+                            value={organizerName}
+                            style={{
+                                width: 300,
+                                margin: 10
+                            }}
+                            placeholder={'организатор'}/>
+                        {/*/телефон организатора, допили автозаполнения с сервера*/}
+                        <Input
+                            value={organizerPhone}
+                            style={{
+                                width: 300,
+                                margin: 10
+                            }}
+                            placeholder={'телефон организатора'}/>
+                        {/*/эл.почта организатора, допили автозаполнения с сервера*/}
+                        <Input
+                            value={organizerEmail}
+                            style={{
+                                width: 300,
+                                margin: 10
+                            }}
+                            placeholder={'Эл. почта организатора'}/>
+                    </Grid>
+                </Grid>
+                <Grid
                     style={{
-                        width: 300,
-                        margin: 10
+                        width: '67%'
                     }}
-                    placeholder={"Название События"}
-                    required
-                />
+                >
+                    <TextField
+                        multiline={true}
+                        variant={"outlined"}
+                        fullWidth={true}
+                        placeholder={"Краткое описание"}
+                        required
+                        InputProps={{
+                            step: 150
+                        }}
+                    />
+                </Grid>
 
-                {/*//навесить функционал карты*/}
-                <Input
-                    style={{
-                        width: 300,
-                        margin: 10
-                    }}
-                    placeholder={"Место события"}
-                    required
-                />
 
-                <Input type={"text"}
-                       maxlength="15"
-                       name={"text"}
-                    style={{
-                        width: 300,
-                        margin: 10
-                    }}
 
-                    placeholder={"Краткое описание"}
-                    required
-                />
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                >
+                    <Grid
+                        style={{
+                            margin: 10,
+                            width:'40%'
+                        }}
+                        container
+                        direction={"column"}
+                        justify={"center"}
+                        alignItems={"center"}
+                    >
+                        {/*сфера события*/}
+                        <Autocomplete
+                            id={'eventArr'}
+                            options={eventArr}
+                            getOptionLabel={(option) => option.title}
+                            style={{
+                                margin: 10,
+                                width: 300
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Сфера события" variant="outlined"/>}
+                        />
+                        {/*формат события*/}
+                        <Autocomplete
+                            id={'eventFormat'}
+                            options={eventFormat}
+                            getOptionLabel={(option) => option.title}
+                            style={{
+                                margin: 10,
+                                width: 300
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Формат события" variant="outlined"/>}
+                        />
+                        {/*возрастные ограничения*/}
+                        <Autocomplete
+                            id={'age'}
+                            options={age}
+                            getOptionLabel={(option) => option.title}
+                            style={{
+                                margin: 10,
+                                width: 300
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Целевая аудитория" variant="outlined"/>}
+                        />
+                        {/*Время и дата начала*/}
+                        <p> Дата и время начала </p>
+                        <Input
+                            id={'StartDate'}
+                            type={"time"}
+                            name={"selected time"}
+                            list={"time-list"}
+                        />
+                        <Input
+                            id={'StartDate'}
+                            type={"date"}
+                            name={"selected date"}
+                            list={"date-list"}
+                        />
+                    </Grid>
 
-                {/*// сфера события*/}
-                <Autocomplete
-                    id={'eventArr'}
-                    options={eventArr}
-                    getOptionLabel={(option) => option.title}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Сфера события" variant="outlined" />}
-                />
+                    <Grid
+                        style={{
+                            margin: 10,
+                            width:'40%'
+                        }}
+                        container
+                        direction={"column"}
+                        justify={"center"}
+                        alignItems={"center"}
+                    >
+                        {/*условия участия*/}
+                        <Autocomplete
+                            id={'Condition'}
+                            options={Condition}
+                            getOptionLabel={(option) => option.title}
+                            style={{
+                                margin: 10,
+                                width: 300
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Условия участия" variant="outlined"/>}
+                        />
+                        {/*количество участников*/}
+                        <Autocomplete
+                            id={'Participants'}
+                            options={Participants}
+                            getOptionLabel={(option) => option.title}
+                            style={{
+                                margin: 10,
+                                width: 300
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Количество участников" variant="outlined"/>}
+                        />
+                        {/*Семантические тэги, (9 мая, 8 марта, 23 фераля, новый год и т.п.)*/}
+                        <Autocomplete
+                            id={'tags'}
+                            options={tags}
+                            getOptionLabel={(option) => option.title}
+                            style={{
+                                margin: 10,
+                                width: 300
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Семантические тэги" variant="outlined"/>}
+                        />
+                        {/*Время и дата окончания*/}
+                        <p> Дата и время окончания</p>
+                        <Input
+                            id={'FinishDate'}
+                            type={"time"}
+                            name={"selected time"}
+                            list={"time-list"}
+                        />
+                        <Input
+                            id={'FinishDate'}
+                            type={"date"}
+                            name={"selected date"}
+                            list={"date-list"}
+                        />
+                    </Grid>
+                </Grid>
 
-                {/*//формат события*/}
-                <Autocomplete
-                    id={'eventFormat'}
-                    options={eventFormat}
-                    getOptionLabel={(option) => option.title}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Формат события" variant="outlined" />}
-                />
 
-                {/*// целевая аудитория*/}
-                <Autocomplete
-                    id={'audience'}
-                    options={audience}
-                    getOptionLabel={(option) => option.title}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Целевая аудитория" variant="outlined" />}
-                />
-                {/*Время и дата начала*/}
-                <input value={'Время и дата начала'}/>
-                <Input type={"time"}
-                       name={"selected time"}
-                       list={"time-list"}
-                />
 
-                <Input type={"date"}
-                       name={"selected date"}
-                       list={"date-list"}
-                />
-                {/*Время и дата окончания*/}
-                <input value={'Время и дата окончания'}/>
-                <Input type={"time"}
-                       name={"selected time"}
-                       list={"time-list"}
-                />
 
-                <Input type={"date"}
-                       name={"selected date"}
-                       list={"date-list"}
-                />
-
-                {/*// возрастные ограничения*/}
-                <Autocomplete
-                    id={'age'}
-                    options={age}
-                    getOptionLabel={(option) => option.title}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Целевая аудитория" variant="outlined" />}
-                />
-
-                {/*// условия участия*/}
-                <Autocomplete
-                    id={'Condition'}
-                    options={Condition}
-                    getOptionLabel={(option) => option.title}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Условия участия" variant="outlined" />}
-                />
-
-                {/*// организатор, допили автозаполнения с сервера*/}
-                <input value={'организатор'}/>
-                {/*// телефон организатора, допили автозаполнения с сервера*/}
-                <input value={'телефон организатора'}/>
-                {/*// элю почта организатора, допили автозаполнения с сервера*/}
-                <input value={'Эл. почта организатора'}/>
-
-                {/*// количество участников*/}
-                <Autocomplete
-                    id={'Participants'}
-                    options={Participants}
-                    getOptionLabel={(option) => option.title}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Количество участников" variant="outlined" />}
-                />
-
-                {/*// Семантические тэги, (9 мая, 8 марта, 23 фераля, новый год и т.п.)*/}
-                <Autocomplete
-                    id={'tags'}
-                    options={tags}
-                    getOptionLabel={(option) => option.title}
-                    style={{ width: 300 }}
-                    renderInput={(params) => <TextField {...params} label="Семантические тэги" variant="outlined" />}
-                />
                 <Grid
                     item
                 >
@@ -281,3 +371,15 @@ export default function EventForm() {
     )
 
 }
+const mapStateToProps = state => ({
+    state: getState(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    //any async func :)
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(EventForm);

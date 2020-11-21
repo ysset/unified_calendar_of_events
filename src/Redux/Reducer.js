@@ -4,7 +4,9 @@ const initialState = {
     singleDayEvents: [],
     userData: {
         userEmail: 'EKS@gmail.com',
-        password: '00000000'
+        password: '00000000',
+        fullName: 'Lutskii Daniil',
+        userPhone: '8(914)-000-0000'
     },
     isAuth: false
 }
@@ -24,7 +26,7 @@ export default function reducer(state = initialState, action) {
                 singleDayEvents: action.singleDayEvents
             }
         default:
-            return state;
+            return state
     }
 }
 
