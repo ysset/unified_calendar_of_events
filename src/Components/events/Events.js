@@ -1,6 +1,7 @@
 
 const events = [
     {
+        eventStatus: 'Agree',
         title: "Баскетбол", // Имя мероприятия
         start: getDate("YEAR-MONTH-01"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -14,6 +15,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Футбол",
         start: getDate("2020-11-01T10:30:00"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -27,6 +29,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Хоккей",
         start: getDate("YEAR-MONTH-07"), // Дата начала
         end: getDate("YEAR-MONTH-10"),// Дата окончания
@@ -40,6 +43,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Футбол",
         start: getDate("YEAR-10-07"), // Дата начала
         end: getDate("YEAR-MONTH-10"),// Дата окончания
@@ -53,6 +57,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Баскетбол",
         start: getDate("YEAR-MONTH-09T16:00:00"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -66,6 +71,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Футбол",
         start: getDate("YEAR-MONTH-16T16:00:00"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -79,6 +85,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Баскетбол",
         start: getDate("YEAR-MONTH-17"),
         end: getDate("YEAR-MONTH-19T16:00:00"),
@@ -92,6 +99,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Футбол",
         start: getDate("YEAR-MONTH-18T10:30:00"),
         end: getDate("YEAR-MONTH-18T12:30:00"),
@@ -105,6 +113,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Хоккей",
         start: getDate("YEAR-MONTH-18T12:00:00"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -118,6 +127,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Хоккей",
         start: getDate("YEAR-MONTH-18T15:00:00"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -131,6 +141,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Хоккей",
         start: getDate("YEAR-MONTH-18T1:00:00"),
         end: getDate("YEAR-MONTH-18T19:30:00"),
@@ -144,6 +155,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         userEmail: 'EKS@gmail.com',
         title: "Хоккей",
         start: getDate("YEAR-MONTH-19T07:00:00"),
@@ -158,6 +170,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         userEmail: 'EKS@gmail.com',
         title: "Опера",
         start: getDate("YEAR-MONTH-05T12:00:00"),
@@ -172,6 +185,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         userEmail: 'EKS@gmail.com',
         title: "Театральное выступление",
         start: getDate("YEAR-MONTH-04T15:00:00"),
@@ -186,6 +200,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         userEmail: 'EKS@gmail.com',
         title: "Речь мэра",
         start: getDate("YEAR-MONTH-05T12:00:00"),
@@ -200,6 +215,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Pending',
         userEmail: 'EKS@gmail.com',
         title: "Выступление группы Нервы",
         start: getDate("YEAR-MONTH-04T07:00:00"),
@@ -214,6 +230,7 @@ const events = [
         ]
     },
     {
+        eventStatus: 'Agree',
         title: "Футбол",
         start: getDate("YEAR-MONTH-04T16:00:00"),
         end: getDate("YEAR-MONTH-04T19:30:00"),

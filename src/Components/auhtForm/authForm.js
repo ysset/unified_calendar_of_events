@@ -106,7 +106,6 @@ function Auth(props) {
                 </Grid>
             </Container>
         </>
-
     )
 }
 const mapStateToProps = state => ({

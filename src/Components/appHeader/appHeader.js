@@ -51,7 +51,7 @@ function ButtonAppBar(props) {
                     {!props.state.isAuth &&
                         <Button color="inherit">
                             <NavLink
-                                to={'/regForm'}
+                                to={'/authForm'}
                                 style={{
                                     color: '#fff',
                                     textDecoration: 'none',

@@ -2,7 +2,7 @@ import React from "react";
 
 import moment from "moment";
 import "./calendar.css";
-import {Box, Container} from "@material-ui/core";
+import {Box, Button, Container, Grid} from "@material-ui/core";
 
 import events from '../events/Events'
 import {connect} from "react-redux";
@@ -14,7 +14,7 @@ import {Redirect} from "react-router";
 
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import SchoolIcon from '@material-ui/icons/School';
-import MuseumIcon from '@material-ui/icons/Museum';
+import ErrorIcon from '@material-ui/icons/Error';
 
 class Calendar extends React.Component {
     weekdayshort = moment.weekdaysShort();
@@ -27,7 +27,8 @@ class Calendar extends React.Component {
         allmonths: moment.months(),
         selectedDay: null,
         currentDayEvents: null,
-        redirectToSingleDay: false
+        redirectToSingleDay: false,
+        filter: false
     };
     daysInMonth = () => {
         return this.state.dateObject.daysInMonth();
@@ -236,6 +237,22 @@ class Calendar extends React.Component {
         );
     };
 
+    handleSwitchFilterTrue = () => {
+        this.setState({
+            filter: true
+        })
+    }
+    handleSwitchFilterFalse = () => {
+        this.setState({
+            filter: false
+        })
+    }
+    handleSwitchFilterNull = () => {
+        this.setState({
+            filter: null
+        })
+    }
+
     render() {
         let weekdayshortname = this.weekdayshort.map(day => {
             return <th key={day}>{day}</th>;
@@ -276,16 +293,56 @@ class Calendar extends React.Component {
                     >
                         <span>{d}</span>
                         <p>
-                            {currentMonthEvents.map(event => {
-                                if(event !== null && d === moment(event.start).date()){
-                                    if (event.resourceId === 'sport') {
-                                        return <DirectionsRunIcon/>
+                            {
+                                currentMonthEvents.map(event => {
+                                    switch (this.state.filter) {
+                                        case false:
+                                            if(event !== null && d === moment(event.start).date()){
+                                                if (event.resourceId === 'sport' && event.eventStatus !== 'Pending') {
+                                                    return <DirectionsRunIcon/>
+                                                }
+                                                if (event.resourceId === 'culture' && event.eventStatus !== 'Pending') {
+                                                    return <SchoolIcon/>
+                                                }
+                                            }
+                                            break
+                                        case true:
+                                            if(
+                                                event !== null
+                                                && d === moment(event.start).date()
+                                                && event.userEmail !== undefined
+                                                && event.userEmail === this.props.state.userData.userEmail
+                                            ){
+                                                if (event.eventStatus === 'Pending') {
+                                                    return <ErrorIcon/>
+                                                }
+                                                if (event.resourceId === 'sport') {
+                                                    return <DirectionsRunIcon/>
+                                                }
+                                                if (event.resourceId === 'culture') {
+                                                    return <SchoolIcon/>
+                                                }
+                                            }
+                                            break
+                                        case null:
+                                            if(
+                                                event !== null
+                                                && d === moment(event.start).date()
+                                                && event.eventStatus !== undefined
+                                                && event.eventStatus === 'Pending'
+                                            ){
+                                                if (event.resourceId === 'sport') {
+                                                    return <DirectionsRunIcon/>
+                                                }
+                                                if (event.resourceId === 'culture') {
+                                                    return <SchoolIcon/>
+                                                }
+                                            }
+                                            break
                                     }
-                                    if (event.resourceId === 'culture') {
-                                        return <SchoolIcon/>
-                                    }
-                                }
-                            })}
+
+                                })
+                            }
                         </p>
                     </Box>
                 </td>
@@ -315,63 +372,106 @@ class Calendar extends React.Component {
         });
 
         return (
-            <Container>
-                {this.state.redirectToSingleDay && <Redirect to={'/singleDayEvents'}/>}
-                <div className="tail-datetime-calendar">
-                    <div className="calendar-navi">
-                    <span
-                        onClick={e => {
-                            this.onPrev();
+            <>
+                <Grid
+                    container
+                    direction={"row"}
+                >
+                    <Grid
+                        style={{
+                            width: '10%'
                         }}
-                        className="calendar-button button-prev"
-                    />
-                        {/*{!this.state.showMonthTable && (*/}
-                            <span
-                                onClick={e => {
-                                    this.showMonth();
-                                }}
-                                className="calendar-label"
-                            >
-                            {this.month()}
-                        </span>
-                        {/*)}*/}
-                        <span className="calendar-label" onClick={e => this.showYearTable()}>
-                        {this.year()}
-                    </span>
+                        container
+                        direction={"column"}
+                    >
+                        <Button
+                            style={{
+                                margin: 10
+                            }}
+                            variant={"contained"}
+                            onClick={this.handleSwitchFilterFalse}
+                        >
+                            Все мероприятия
+                        </Button>
+                        <Button
+                            style={{
+                                margin: 10
+                            }}
+                            variant={"contained"}
+                            onClick={this.handleSwitchFilterTrue}
+                        >
+                            Ваши мероприятия
+                        </Button>
+                        <Button
+                            style={{
+                                margin: 10
+                            }}
+                            variant={"contained"}
+                            onClick={this.handleSwitchFilterNull}
+                        >
+                            На соглосовании
+                        </Button>
+                    </Grid>
+
+                    <Container>
+                        {this.state.redirectToSingleDay && <Redirect to={'/singleDayEvents'}/>}
+                        <div className="tail-datetime-calendar">
+                            <div className="calendar-navi">
                         <span
                             onClick={e => {
-                                this.onNext();
+                                this.onPrev();
                             }}
-                            className="calendar-button button-next"
+                            className="calendar-button button-prev"
                         />
-                    </div>
+                                {/*{!this.state.showMonthTable && (*/}
+                                <span
+                                    onClick={e => {
+                                        this.showMonth();
+                                    }}
+                                    className="calendar-label"
+                                >
+                                {this.month()}
+                            </span>
+                                {/*)}*/}
+                                <span className="calendar-label" onClick={e => this.showYearTable()}>
+                            {this.year()}
+                        </span>
+                                <span
+                                    onClick={e => {
+                                        this.onNext();
+                                    }}
+                                    className="calendar-button button-next"
+                                />
+                            </div>
 
-                    <div className="calendar-date">
-                        {this.state.showYearTable && <this.YearTable props={this.year()}/>}
-                        {this.state.showMonthTable && (
-                            <this.MonthList data={moment.months()}/>
-                        )}
-                    </div>
+                            <div className="calendar-date">
+                                {this.state.showYearTable && <this.YearTable props={this.year()}/>}
+                                {this.state.showMonthTable && (
+                                    <this.MonthList data={moment.months()}/>
+                                )}
+                            </div>
 
-                    {this.state.showDateTable && (
-                        <div className="calendar-date">
-                            <table
-                                cellpadding="10"
-                                rules="rows"
-                                border="1"
-                                width="80%"
-                                className="calendar-day"
-                            >
-                                <thead>
-                                <tr>{weekdayshortname}</tr>
-                                </thead>
-                                <tbody>{daysinmonth}</tbody>
-                            </table>
+                            {this.state.showDateTable && (
+                                <div className="calendar-date">
+                                    <table
+                                        cellpadding="10"
+                                        rules="rows"
+                                        border="1"
+                                        width="80%"
+                                        className="calendar-day"
+                                    >
+                                        <thead>
+                                        <tr>{weekdayshortname}</tr>
+                                        </thead>
+                                        <tbody>{daysinmonth}</tbody>
+                                    </table>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-            </Container>
+                    </Container>
+                </Grid>
 
+            </>
         );
     }
 }
