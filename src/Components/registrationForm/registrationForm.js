@@ -3,8 +3,23 @@ import {Container, Input} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 
 export default function registrationForm() {
+
+    //сфера деятельности
+    const eventAr = [
+        {
+            title: 'Maneger 1',
+        },
+        {
+            title: 'Maneger 2'
+        },
+        {
+            title: "Maneger 3"
+        }
+    ]
  return(
      <>
          <Container>
@@ -27,34 +42,19 @@ export default function registrationForm() {
                      width: 300,
                      margin: 10
                  }}
-                 placeholder={"Введите Имя"}
+                 placeholder={"Введите наименование организации"}
                  required
              />
-             <Input
-                 style={{
-                     width: 300,
-                     margin: 10
-                 }}
-                 placeholder={"Введите Фамилию"}
-                 required
-             />
-             <Input
-                 style={{
-                     width: 300,
-                     margin: 10
-                 }}
-                 placeholder={"Введите Отчество"}
-             />
-             <Input
-                 style={{
-                     width: 300,
-                     margin: 10
-                 }}
-                 type="tel"
-                 pattern="\(\d\d\d\) ?\d\d\d-\d\d-\d\d"
-                 placeholder="+7 (###) ###-##-##"
-                 required
-             />
+                 <Input
+                     style={{
+                         width: 300,
+                         margin: 10
+                     }}
+                     type="tel"
+                     pattern="\(\d\d\d\) ?\d\d\d-\d\d-\d\d"
+                     placeholder="+7 (###) ###-##-##"
+                     required
+                 />
              <Input
                  style={{
                      width: 300,
@@ -64,13 +64,74 @@ export default function registrationForm() {
                  placeholder={"Введите адресс эл. почты"}
                  required
              />
+
+             <Input
+                 style={{
+                     width: 300,
+                     margin: 10
+                 }}
+                 placeholder={"Сайт организации"}
+             />
+             <Input
+                 style={{
+                     width: 300,
+                     margin: 10
+                 }}
+                 placeholder={"Социальные сети"}
+             />
+
              <Input
                  style={{
                      width: 300,
                      margin: 10
                  }}//к какой организации принадлежит пользователь
-
+                 placeholder={"Адресс офиса"}
              />
+
+                 {/*// сфера события*/}
+                 <Autocomplete
+                     id={'eventArr'}
+                     options={eventAr}
+                     getOptionLabel={(option) => option.title}
+                     style={{ width: 300 }}
+                     renderInput={(params) => <TextField {...params} label="Сфера события" variant="outlined" />}
+                     required
+                 />
+                 <Input
+                     style={{
+                         width: 300,
+                         margin: 10
+                     }}//к какой организации принадлежит пользователь
+                     placeholder={"ФИО руководителя"}
+                 />
+                 <Input
+                     style={{
+                         width: 300,
+                         margin: 10
+                     }}//к какой организации принадлежит пользователь
+                     placeholder={"ФИО контактного лица"}
+                 />
+                 Номер Контактного лица
+                 <Input
+                     style={{
+                         width: 300,
+                         margin: 10
+                     }}
+                     type="tel"
+                     pattern="\(\d\d\d\) ?\d\d\d-\d\d-\d\d"
+                     placeholder="+7 (###) ###-##-##"
+                     required
+                 />
+                 <Input
+                     style={{
+                         width: 300,
+                         margin: 10
+                     }}
+                     type={"email"}
+                     placeholder={"Введите адресс эл. почты организатора"}
+                     required
+                 />
+
              <Input
                  style={{
                      width: 300,
