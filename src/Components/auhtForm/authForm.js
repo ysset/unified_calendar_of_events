@@ -2,12 +2,39 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import {Container, Input} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
+import {getState} from "../../Redux/Reducer";
+import {bindActionCreators} from "redux";
+import {sendSingleDayEventsInformation} from "../../Redux/Actions";
+import {connect} from "react-redux";
+import {setIsAuth} from '../../Redux/Actions'
 
-export default function Auth() {
+function Auth(props) {
+
+    let propsUserData = props.state.userData
+    let isAuth = props.state.isAuth
+
+    let state = {
+        userEmail: '',
+        password: ''
+    }
+    const handleChangePass = (e) => {
+        state.password = e.target.value
+    }
+    const handleChangeEmail = (e) => {
+        state.userEmail = e.target.value
+        console.log(state)
+    }
+
+    const onSignInClick = () => {
+        if (state.password === propsUserData.password && state.userEmail === propsUserData.userEmail) {
+            props.setIsAuth(true)
+        }
+    }
 
     return (
         <>
+            {isAuth && <Redirect to={'/'}/>}
             <Container>
                 <Grid
                     container
@@ -16,19 +43,17 @@ export default function Auth() {
                     alignItems="center"
                 >
                     <p style={{
-                        fontSamily: 'Times New Roman',
                         fontSize: "250%",
-                        fontFamily: "Verdana",
                         fontsSize: "11pt",
                     }}>
                         Авторизация
                     </p>
-
                     <Input
                         style={{
                             width: 300,
                             margin: 10
                         }}
+                        onChange={handleChangeEmail}
                         placeholder={"Введите адрес эл. почты"}
                         required
                     />
@@ -38,6 +63,8 @@ export default function Auth() {
                             width: 300,
                             margin: 10
                         }}
+                        type={'password'}
+                        onChange={handleChangePass}
                         placeholder={"Введите пароль"}
                         required
                     />
@@ -53,6 +80,7 @@ export default function Auth() {
                             }}
                             variant="contained"
                             color="primary"
+                            onClick={onSignInClick}
                         >
                             Sign in
                         </Button>
@@ -80,6 +108,17 @@ export default function Auth() {
         </>
 
     )
-
-
 }
+const mapStateToProps = state => ({
+    state: getState(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    //any async func :)
+    setIsAuth: (e) => dispatch(setIsAuth(e))
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Auth);

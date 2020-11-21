@@ -12,8 +12,8 @@ import EventForm from "../eventForm/EventForm";
 export  default function Routes() {
     return(
         <>
-            <Route exact path={'/regForm'} component={registrationForm}/>
             <Route path={'/'} component={ButtonAppBar}/>
+            <Route exact path={'/regForm'} component={registrationForm}/>
             <Route exact path={'/'} component={CalendarPage}/>
             <Route exact path={'/singleDayEvents'} component={singleDayEvents}/>
             <Route exact path={'/authForm'} component={authForm}/>

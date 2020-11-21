@@ -12,6 +12,10 @@ import {getState} from "../../Redux/Reducer";
 import {sendSingleDayEventsInformation} from '../../Redux/Actions'
 import {Redirect} from "react-router";
 
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import SchoolIcon from '@material-ui/icons/School';
+import MuseumIcon from '@material-ui/icons/Museum';
+
 class Calendar extends React.Component {
     weekdayshort = moment.weekdaysShort();
 
@@ -270,15 +274,16 @@ class Calendar extends React.Component {
                             this.onDayClick(e, d, currentMonthEvents);
                         }}
                     >
-                        <span
-                            style={{
-                                textAlign: "start"
-                            }}
-                        >{d}</span>
+                        <span>{d}</span>
                         <p>
                             {currentMonthEvents.map(event => {
                                 if(event !== null && d === moment(event.start).date()){
-                                    return `${event.title}`
+                                    if (event.resourceId === 'sport') {
+                                        return <DirectionsRunIcon/>
+                                    }
+                                    if (event.resourceId === 'culture') {
+                                        return <SchoolIcon/>
+                                    }
                                 }
                             })}
                         </p>
@@ -306,10 +311,7 @@ class Calendar extends React.Component {
         });
 
         let daysinmonth = rows.map((d, i) => {
-            return <tr style={{
-                border: 10
-            }}
-            >{d}</tr>;
+            return <tr>{d}</tr>;
         });
 
         return (
@@ -353,7 +355,13 @@ class Calendar extends React.Component {
 
                     {this.state.showDateTable && (
                         <div className="calendar-date">
-                            <table className="calendar-day">
+                            <table
+                                cellpadding="10"
+                                rules="rows"
+                                border="1"
+                                width="80%"
+                                className="calendar-day"
+                            >
                                 <thead>
                                 <tr>{weekdayshortname}</tr>
                                 </thead>

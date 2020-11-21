@@ -1,11 +1,22 @@
-import {SEND_SINGLE_DAY_EVENTS_INFORMATION} from './Actions'
+import {SEND_SINGLE_DAY_EVENTS_INFORMATION, SET_IS_AUTH} from './Actions'
 
 const initialState = {
-    singleDayEvents: []
+    singleDayEvents: [],
+    userData: {
+        userEmail: 'EKS@gmail.com',
+        password: '00000000'
+    },
+    isAuth: false
 }
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case SET_IS_AUTH:
+            return {
+                ...state,
+                isAuth: action.isAuth
+            }
+
         case SEND_SINGLE_DAY_EVENTS_INFORMATION:
             return {
                 ...state,

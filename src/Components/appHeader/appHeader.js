@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {NavLink} from 'react-router-dom'
+import {getState} from "../../Redux/Reducer";
+import {bindActionCreators} from "redux";
+import {setIsAuth} from "../../Redux/Actions";
+import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ButtonAppBar() {
+function ButtonAppBar(props) {
     const classes = useStyles();
 
     return (
@@ -42,15 +46,17 @@ export default function ButtonAppBar() {
                             ЕКС
                         </NavLink>
                     </Typography>
-                    <Button color="inherit">
-                        <NavLink
-                            to={'/regForm'}
-                            style={{
-                                color: '#fff',
-                                textDecoration: 'none',
-                            }}
-                        > Sign in </NavLink>
-                    </Button>
+                    {!props.state.isAuth &&
+                        <Button color="inherit">
+                            <NavLink
+                                to={'/regForm'}
+                                style={{
+                                    color: '#fff',
+                                    textDecoration: 'none',
+                                }}
+                            > Sign in </NavLink>
+                        </Button>
+                    }
 
                     <Button color="inherit">
                         <NavLink
@@ -66,3 +72,16 @@ export default function ButtonAppBar() {
         </div>
     );
 }
+const mapStateToProps = state => ({
+    state: getState(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    //any async func :)
+    setIsAuth: (e) => dispatch(setIsAuth(e))
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ButtonAppBar);
