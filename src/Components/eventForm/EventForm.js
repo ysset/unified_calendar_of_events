@@ -1,26 +1,44 @@
-import React from "react";
+import React, {useState} from "react";
 
-import {Container, Input, TextField, TextareaAutosize} from "@material-ui/core";
+import {Container, Input, TextField} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import Button from "@material-ui/core/Button";
 import {getState} from "../../Redux/Reducer";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {Redirect} from "react-router";
 
 function EventForm(props) {
+
+    const [redirect, setRedirect] = useState(false)
+
+    const state = {
+        eventName: '',
+        eventPlace: '',
+        fullName: props.state.userData.fullName,
+        phoneNumber: props.state.userData.userPhone,
+        userEmail: props.state.userData.userEmail,
+        shortDescription: '',
+        typeOfEvent: '',
+        formatOfEvent: '',
+        auditory: '',
+        isFree: '',
+        countOfActors: '',
+        tags: '',
+        startTime: '',
+        finishTime: ''
+    }
+
     const userData = props.state.userData
 
     // Сфера события
     const eventArr = [
         {
-            title: 'Maneger 1',
+            title: 'Культура',
         },
         {
-            title: 'Maneger 2'
-        },
-        {
-            title: "Maneger 3"
+            title: 'Спорт'
         }
     ]
 
@@ -100,10 +118,92 @@ function EventForm(props) {
     const organizerPhone = userData.userPhone !== undefined ? userData.userPhone : ''
     const organizerEmail = userData.userEmail !== undefined ? userData.userEmail : ''
 
+    const handleOnChangeName = (e) => {
+        console.log(e.target.value)
+        let data = e.target.value
+        state.eventName = data
+    }
 
+    const handleOnChangeEvenPlace = (e) => {
+        console.log(e.target.value)
+        let data = e.target.value
+        state.eventPlace = data
+    }
+
+    const handleOnChangeShortDescription = (e) => {
+        console.log(e.target.value)
+        let data = e.target.value
+        state.shortDescription = data
+    }
+
+    const handleOnChangeTypeOfEvent = (e) => {
+        console.log(e.target.innerText)
+        let data = e.target.innerText
+        state.typeOfEvent = data
+    }
+
+    const handleOnChangeFormatOfEvent = (e) => {
+        console.log(e.target.innerText)
+        let data = e.target.innerText
+        state.formatOfEvent = data
+    }
+
+    const handleOnChangeAuditory = (e) => {
+        console.log(e.target.innerText)
+        let data = e.target.innerText
+        state.auditory = data
+    }
+
+    const handleOnChangeIsFree = (e) => {
+        console.log(e.target.innerText)
+        let data = e.target.innerText
+        state.isFree = data
+    }
+
+    const handleOnChangeCountOfActors = (e) => {
+        console.log(e.target.innerText)
+        let data = e.target.innerText
+        state.countOfActors = data
+    }
+
+    const handleOnChangeTags = (e) => {
+        console.log(e.target.innerText)
+        let data = e.target.innerText
+        state.tags = data
+    }
+
+    const handleOnChangeStartTime = (e) => {
+        console.log(e.target.value)
+        let data = e.target.value
+        state.startTime = data
+    }
+
+    const handleOnChangeFinishTime = (e) => {
+        console.log(e.target.value)
+        let data = e.target.value
+        state.finishTime = data
+    }
+
+    const handleOnChangeStartDate = (e) => {
+        console.log(e.target.value)
+        let data = e.target.value
+        state.startTime = data
+    }
+
+    const handleOnChangeFinishDate = (e) => {
+        console.log(e.target.value)
+        let data = e.target.value
+        state.finishTime = data
+    }
+
+    const onSubmit = () => {
+        console.log(state)
+        setRedirect(true)
+    }
 
     return (
         <Container>
+            {redirect && <Redirect to={'/'}/>}
             <Grid
                 container
                 direction="column"
@@ -126,7 +226,7 @@ function EventForm(props) {
                     <Grid
                         style={{
                             margin: 10,
-                            width:'40%'
+                            width: '40%'
                         }}
                         container
                         direction={"column"}
@@ -134,6 +234,7 @@ function EventForm(props) {
                         alignItems={"center"}
                     >
                         <Input
+                            onChange={handleOnChangeName}
                             style={{
                                 width: 300,
                                 margin: 10
@@ -144,6 +245,7 @@ function EventForm(props) {
 
                         {/*навесить функционал карты*/}
                         <Input
+                            onChange={handleOnChangeEvenPlace}
                             style={{
                                 width: 300,
                                 margin: 10
@@ -156,7 +258,7 @@ function EventForm(props) {
                     <Grid
                         style={{
                             margin: 10,
-                            width:'40%'
+                            width: '40%'
                         }}
                         container
                         direction={"column"}
@@ -195,6 +297,7 @@ function EventForm(props) {
                     }}
                 >
                     <TextField
+                        onChange={handleOnChangeShortDescription}
                         multiline={true}
                         variant={"outlined"}
                         fullWidth={true}
@@ -206,8 +309,6 @@ function EventForm(props) {
                     />
                 </Grid>
 
-
-
                 <Grid
                     container
                     direction="row"
@@ -217,7 +318,7 @@ function EventForm(props) {
                     <Grid
                         style={{
                             margin: 10,
-                            width:'40%'
+                            width: '40%'
                         }}
                         container
                         direction={"column"}
@@ -226,6 +327,7 @@ function EventForm(props) {
                     >
                         {/*сфера события*/}
                         <Autocomplete
+                            onChange={handleOnChangeTypeOfEvent}
                             id={'eventArr'}
                             options={eventArr}
                             getOptionLabel={(option) => option.title}
@@ -235,8 +337,9 @@ function EventForm(props) {
                             }}
                             renderInput={(params) => <TextField {...params} label="Сфера события" variant="outlined"/>}
                         />
-                        {/*формат события*/}
+                        {/*формат проведения события*/}
                         <Autocomplete
+                            onChange={handleOnChangeFormatOfEvent}
                             id={'eventFormat'}
                             options={eventFormat}
                             getOptionLabel={(option) => option.title}
@@ -244,10 +347,12 @@ function EventForm(props) {
                                 margin: 10,
                                 width: 300
                             }}
-                            renderInput={(params) => <TextField {...params} label="Формат события" variant="outlined"/>}
+                            renderInput={(params) => <TextField {...params} label="формат проведения события"
+                                                                variant="outlined"/>}
                         />
                         {/*возрастные ограничения*/}
                         <Autocomplete
+                            onChange={handleOnChangeAuditory}
                             id={'age'}
                             options={age}
                             getOptionLabel={(option) => option.title}
@@ -255,17 +360,20 @@ function EventForm(props) {
                                 margin: 10,
                                 width: 300
                             }}
-                            renderInput={(params) => <TextField {...params} label="Целевая аудитория" variant="outlined"/>}
+                            renderInput={(params) => <TextField {...params} label="Целевая аудитория"
+                                                                variant="outlined"/>}
                         />
                         {/*Время и дата начала*/}
                         <p> Дата и время начала </p>
                         <Input
-                            id={'StartDate'}
+                            onChange={handleOnChangeStartTime}
+                            id={'StartTime'}
                             type={"time"}
                             name={"selected time"}
                             list={"time-list"}
                         />
                         <Input
+                            onChange={handleOnChangeStartDate}
                             id={'StartDate'}
                             type={"date"}
                             name={"selected date"}
@@ -276,7 +384,7 @@ function EventForm(props) {
                     <Grid
                         style={{
                             margin: 10,
-                            width:'40%'
+                            width: '40%'
                         }}
                         container
                         direction={"column"}
@@ -285,6 +393,7 @@ function EventForm(props) {
                     >
                         {/*условия участия*/}
                         <Autocomplete
+                            onChange={handleOnChangeIsFree}
                             id={'Condition'}
                             options={Condition}
                             getOptionLabel={(option) => option.title}
@@ -292,10 +401,12 @@ function EventForm(props) {
                                 margin: 10,
                                 width: 300
                             }}
-                            renderInput={(params) => <TextField {...params} label="Условия участия" variant="outlined"/>}
+                            renderInput={(params) => <TextField {...params} label="Условия участия"
+                                                                variant="outlined"/>}
                         />
                         {/*количество участников*/}
                         <Autocomplete
+                            onChange={handleOnChangeCountOfActors}
                             id={'Participants'}
                             options={Participants}
                             getOptionLabel={(option) => option.title}
@@ -303,10 +414,12 @@ function EventForm(props) {
                                 margin: 10,
                                 width: 300
                             }}
-                            renderInput={(params) => <TextField {...params} label="Количество участников" variant="outlined"/>}
+                            renderInput={(params) => <TextField {...params} label="Количество участников"
+                                                                variant="outlined"/>}
                         />
                         {/*Семантические тэги, (9 мая, 8 марта, 23 фераля, новый год и т.п.)*/}
                         <Autocomplete
+                            onChange={handleOnChangeTags}
                             id={'tags'}
                             options={tags}
                             getOptionLabel={(option) => option.title}
@@ -314,17 +427,20 @@ function EventForm(props) {
                                 margin: 10,
                                 width: 300
                             }}
-                            renderInput={(params) => <TextField {...params} label="Семантические тэги" variant="outlined"/>}
+                            renderInput={(params) => <TextField {...params} label="Семантические тэги"
+                                                                variant="outlined"/>}
                         />
                         {/*Время и дата окончания*/}
                         <p> Дата и время окончания</p>
                         <Input
-                            id={'FinishDate'}
+                            onChange={handleOnChangeFinishTime}
+                            id={'FinishTime'}
                             type={"time"}
                             name={"selected time"}
                             list={"time-list"}
                         />
                         <Input
+                            onChange={handleOnChangeFinishDate}
                             id={'FinishDate'}
                             type={"date"}
                             name={"selected date"}
@@ -332,9 +448,6 @@ function EventForm(props) {
                         />
                     </Grid>
                 </Grid>
-
-
-
 
                 <Grid
                     item
@@ -355,6 +468,7 @@ function EventForm(props) {
                     item
                 >
                     <Button
+                        onClick={onSubmit}
                         style={{
                             marginTop: 25,
                             marginRight: 0
@@ -371,6 +485,7 @@ function EventForm(props) {
     )
 
 }
+
 const mapStateToProps = state => ({
     state: getState(state)
 })
