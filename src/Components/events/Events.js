@@ -215,8 +215,24 @@ const events = [
         ]
     },
     {
+        color: 'green',// if Pending server get green color
         eventStatus: 'Pending',
         userEmail: 'EKS@gmail.com',
+        title: "Выступление группы Нервы",
+        start: getDate("YEAR-MONTH-04T07:00:00"),
+        end: getDate("YEAR-MONTH-04T19:30:00"),
+        type: 'culture',
+        resourceId: 'culture',
+        resources: [
+            {
+                id: 'culture',
+                title: 'Дворец культуры'
+            }
+        ]
+    },
+    {
+        color: 'green',// if Pending server get green color
+        eventStatus: 'Pending',
         title: "Выступление группы Нервы",
         start: getDate("YEAR-MONTH-04T07:00:00"),
         end: getDate("YEAR-MONTH-04T19:30:00"),

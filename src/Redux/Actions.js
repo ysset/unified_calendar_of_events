@@ -18,11 +18,12 @@ export function sendThemeInformation(data) {
     }
 }
 
-export function sendSingleDayEventsInformation(data) {
-    console.log(data)
+export function sendSingleDayEventsInformation(data, filterStatus) {
+    console.log(filterStatus)
     return {
         type: SEND_SINGLE_DAY_EVENTS_INFORMATION,
-        singleDayEvents: data
+        singleDayEvents: data,
+        filterStatus: filterStatus
     }
 }
 

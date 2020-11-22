@@ -228,7 +228,7 @@ class Calendar extends React.Component {
                         console.log(this.state.currentDayEvents)
                     }
                 })
-                this.props.sendInfo(this.state.currentDayEvents)
+                this.props.sendInfo(this.state.currentDayEvents, this.state.filter)
                 this.state.currentDayEvents[0] !== undefined &&
                 this.setState({
                     redirectToSingleDay: true
@@ -263,13 +263,22 @@ class Calendar extends React.Component {
         }
         let daysInMonth = [];
         //============================================
-            let currentMonthEvents = events.map((eventDate) => {
-                    //2020-11-01T10:30:00 шаблон времени
-                return  moment(eventDate.start).month() === moment(this.state.dateObject).month() ? eventDate : null
+        let currentMonthEvents = events
+            .map((eventDate) => {
+                //2020-11-01T10:30:00 шаблон времени
+                return moment(eventDate.start).month() === moment(this.state.dateObject).month() ? eventDate : null
             })
-        console.log(currentMonthEvents)
+            .filter(e => e !== null)
+
         for (let d = 1; d <= this.daysInMonth(); d++) {
             // let currentDay = d == this.currentDay() ? "today" : "";
+            // let currentDayEvent = []
+            //     currentDayEvent.push(currentMonthEvents.map(event => {
+            //         if (event !== null && moment(event.start).date() === d) {
+            //             return event
+            //         }
+            // }))
+            // console.log('day:',d, currentDayEvent)
             daysInMonth.push(
                 <td
                     style={{
@@ -278,7 +287,7 @@ class Calendar extends React.Component {
                         border: 1,
                         borderColor: "red",
                     }}
-                    key={d} >
+                    key={d}>
                     <Box
                         style={{
                             minHeight: 100,
@@ -297,7 +306,7 @@ class Calendar extends React.Component {
                                 currentMonthEvents.map(event => {
                                     switch (this.state.filter) {
                                         case false:
-                                            if(event !== null && d === moment(event.start).date()){
+                                            if (d === moment(event.start).date()) {
                                                 if (event.resourceId === 'sport' && event.eventStatus !== 'Pending') {
                                                     return <DirectionsRunIcon/>
                                                 }
@@ -307,14 +316,15 @@ class Calendar extends React.Component {
                                             }
                                             break
                                         case true:
-                                            if(
-                                                event !== null
-                                                && d === moment(event.start).date()
+                                            if (
+                                                d === moment(event.start).date()
                                                 && event.userEmail !== undefined
                                                 && event.userEmail === this.props.state.userData.userEmail
-                                            ){
+                                            ) {
                                                 if (event.eventStatus === 'Pending') {
-                                                    return <ErrorIcon/>
+                                                    return <ErrorIcon style={{
+                                                        color: "green"
+                                                    }}/>
                                                 }
                                                 if (event.resourceId === 'sport') {
                                                     return <DirectionsRunIcon/>
@@ -325,22 +335,24 @@ class Calendar extends React.Component {
                                             }
                                             break
                                         case null:
-                                            if(
-                                                event !== null
-                                                && d === moment(event.start).date()
+                                            if (
+                                                d === moment(event.start).date()
                                                 && event.eventStatus !== undefined
                                                 && event.eventStatus === 'Pending'
-                                            ){
+                                                && event.userEmail !== undefined
+                                                && event.userEmail === this.props.state.userData.userEmail
+                                            ) {
                                                 if (event.resourceId === 'sport') {
                                                     return <DirectionsRunIcon/>
                                                 }
                                                 if (event.resourceId === 'culture') {
-                                                    return <SchoolIcon/>
+                                                    return <SchoolIcon style={{
+                                                        color: "green"
+                                                    }}/>
                                                 }
                                             }
                                             break
                                     }
-
                                 })
                             }
                         </p>
@@ -384,33 +396,37 @@ class Calendar extends React.Component {
                         container
                         direction={"column"}
                     >
-                        <Button
-                            style={{
-                                margin: 10
-                            }}
-                            variant={"contained"}
-                            onClick={this.handleSwitchFilterFalse}
-                        >
-                            Все мероприятия
-                        </Button>
-                        <Button
-                            style={{
-                                margin: 10
-                            }}
-                            variant={"contained"}
-                            onClick={this.handleSwitchFilterTrue}
-                        >
-                            Ваши мероприятия
-                        </Button>
-                        <Button
-                            style={{
-                                margin: 10
-                            }}
-                            variant={"contained"}
-                            onClick={this.handleSwitchFilterNull}
-                        >
-                            На соглосовании
-                        </Button>
+                        {this.props.state.isAuth &&
+                        <>
+                            <Button
+                                style={{
+                                    margin: 10
+                                }}
+                                variant={"contained"}
+                                onClick={this.handleSwitchFilterFalse}
+                            >
+                                Все мероприятия
+                            </Button>
+                            <Button
+                                style={{
+                                    margin: 10
+                                }}
+                                variant={"contained"}
+                                onClick={this.handleSwitchFilterTrue}
+                            >
+                                Ваши мероприятия
+                            </Button>
+                            <Button
+                                style={{
+                                    margin: 10
+                                }}
+                                variant={"contained"}
+                                onClick={this.handleSwitchFilterNull}
+                            >
+                                На соглосовании
+                            </Button>
+                        </>
+                        }
                     </Grid>
 
                     <Container>
@@ -475,13 +491,14 @@ class Calendar extends React.Component {
         );
     }
 }
+
 const mapStateToProps = state => ({
     state: getState(state)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     //any async func :)
-    sendInfo:(e) => dispatch(sendSingleDayEventsInformation(e))
+    sendInfo: (crDay, filter) => dispatch(sendSingleDayEventsInformation(crDay, filter))
 }, dispatch)
 
 export default connect(

@@ -2,6 +2,7 @@ import {SEND_SINGLE_DAY_EVENTS_INFORMATION, SET_IS_AUTH} from './Actions'
 
 const initialState = {
     singleDayEvents: [],
+    filterStatus: false,
     userData: {
         userEmail: 'EKS@gmail.com',
         password: '00000000',
@@ -22,6 +23,7 @@ export default function reducer(state = initialState, action) {
         case SEND_SINGLE_DAY_EVENTS_INFORMATION:
             return {
                 ...state,
+                filterStatus: action.filterStatus,
                 ...state.singleDayEvents,
                 singleDayEvents: action.singleDayEvents
             }

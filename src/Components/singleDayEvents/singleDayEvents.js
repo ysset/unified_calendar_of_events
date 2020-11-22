@@ -16,13 +16,25 @@ const SingleDayEvents = props => {
     }
     let dayEvents = props.state.singleDayEvents
 
-    console.log(props.state.singleDayEvents)
+    let filterStatus = props.state.filterStatus
 
     for (let i = 0; i < dayEvents.length; i++) {
         state.resources.push({...dayEvents[i].resources[0]})
-        console.log(state.resources)
     }
 
+    let eventsToDisplay = []
+
+    switch (filterStatus) {
+        case true:
+            eventsToDisplay.push(...dayEvents.filter(event => event.userEmail === props.state.userData.userEmail))
+            break
+        case false:
+            eventsToDisplay.push(...dayEvents.filter(event => event.eventStatus !== 'Pending'))
+            break
+        case null:
+            eventsToDisplay.push(...dayEvents.filter(event => event.userEmail === props.state.userData.userEmail && event.eventStatus === 'Pending'))
+            break
+    }
     return(
         <>
             <Container>
@@ -36,7 +48,7 @@ const SingleDayEvents = props => {
                     selectMirror={true}
                     dayMaxEvents={true}
                     resources={state.resources}
-                    events={dayEvents}
+                    events={eventsToDisplay}
                     /* you can update a remote database when these fire:
                     eventAdd={function(){}}
                     eventChange={function(){}}
