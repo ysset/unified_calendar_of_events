@@ -1,13 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 
 import FullCalendar from "@fullcalendar/react";
 import {getState} from "../../Redux/Reducer";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {Button, Container} from "@material-ui/core";
-import moment from "moment";
+import {Container} from "@material-ui/core";
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
-import {sendSingleDayEventsInformation} from "../../Redux/Actions";
 
 const SingleDayEvents = props => {
 
