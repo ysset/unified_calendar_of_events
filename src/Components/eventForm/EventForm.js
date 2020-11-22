@@ -9,25 +9,29 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Redirect} from "react-router";
 
+import events from "../events/Events";
+
 function EventForm(props) {
 
     const [redirect, setRedirect] = useState(false)
 
     const state = {
-        eventName: '',
+        title: '',
         eventPlace: '',
         fullName: props.state.userData.fullName,
         phoneNumber: props.state.userData.userPhone,
         userEmail: props.state.userData.userEmail,
         shortDescription: '',
-        typeOfEvent: '',
+        resourceId: '',
         formatOfEvent: '',
         auditory: '',
         isFree: '',
         countOfActors: '',
         tags: '',
         startTime: '',
-        finishTime: ''
+        finishTime: '',
+        startDate: '',
+        finishDate: ''
     }
 
     const userData = props.state.userData
@@ -121,7 +125,7 @@ function EventForm(props) {
     const handleOnChangeName = (e) => {
         console.log(e.target.value)
         let data = e.target.value
-        state.eventName = data
+        state.title = data
     }
 
     const handleOnChangeEvenPlace = (e) => {
@@ -136,10 +140,10 @@ function EventForm(props) {
         state.shortDescription = data
     }
 
-    const handleOnChangeTypeOfEvent = (e) => {
+    const handleOnChangeResourcedId = (e) => {
         console.log(e.target.innerText)
         let data = e.target.innerText
-        state.typeOfEvent = data
+        state.resourceId = data
     }
 
     const handleOnChangeFormatOfEvent = (e) => {
@@ -173,32 +177,46 @@ function EventForm(props) {
     }
 
     const handleOnChangeStartTime = (e) => {
-        console.log(e.target.value)
+        console.log('StartTime',e.target.value)
         let data = e.target.value
         state.startTime = data
     }
 
     const handleOnChangeFinishTime = (e) => {
-        console.log(e.target.value)
+        console.log('FinishTime',e.target.value)
         let data = e.target.value
         state.finishTime = data
     }
 
     const handleOnChangeStartDate = (e) => {
-        console.log(e.target.value)
+        console.log('StartDate',e.target.value)
         let data = e.target.value
-        state.startTime = data
+        state.startDate = data
     }
 
     const handleOnChangeFinishDate = (e) => {
-        console.log(e.target.value)
+        console.log('FinishDate',e.target.value)
         let data = e.target.value
-        state.finishTime = data
+        state.finishDate = data
     }
 
     const onSubmit = () => {
         console.log(state)
         setRedirect(true)
+        events.push({
+            userEmail: state.userEmail,
+            title: state.title,
+            start: `${state.startDate}T${state.startTime}`,
+            end: `${state.finishDate}T${state.finishTime}`,
+            type: 'culture',
+            resourceId: state.resourceId === 'Культура' ? 'culture' : 'sport',
+            resources: [
+                {
+                    id: state.resourceId === 'Культура' ? 'culture' : 'sport',
+                    title: state.resourceId === 'Культура' ? 'Дворец культуры' : 'Дворец спорта',
+                }
+            ]
+        })
     }
 
     return (
@@ -327,7 +345,7 @@ function EventForm(props) {
                     >
                         {/*сфера события*/}
                         <Autocomplete
-                            onChange={handleOnChangeTypeOfEvent}
+                            onChange={handleOnChangeResourcedId}
                             id={'eventArr'}
                             options={eventArr}
                             getOptionLabel={(option) => option.title}

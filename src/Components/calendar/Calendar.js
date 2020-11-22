@@ -411,6 +411,7 @@ class Calendar extends React.Component {
         let daysinmonth = rows.map((d, i) => {
             return <tr>{d}</tr>;
         });
+        console.log(events)
 
         return (
             <>
