@@ -15,6 +15,9 @@ import {Redirect} from "react-router";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import SchoolIcon from '@material-ui/icons/School';
 import ErrorIcon from '@material-ui/icons/Error';
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableBody from "@material-ui/core/TableBody";
 
 class Calendar extends React.Component {
     weekdayshort = moment.weekdaysShort();
@@ -28,8 +31,24 @@ class Calendar extends React.Component {
         selectedDay: null,
         currentDayEvents: null,
         redirectToSingleDay: false,
-        filter: false
+        filter: false,
+        width: window.innerWidth,
     };
+
+    componentWillMount() {
+        window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+
+// make sure to remove the listener
+// when the component is not mounted anymore
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    handleWindowSizeChange = () => {
+        this.setState({ width: window.innerWidth });
+    };
+
     daysInMonth = () => {
         return this.state.dateObject.daysInMonth();
     };
@@ -254,8 +273,12 @@ class Calendar extends React.Component {
     }
 
     render() {
+
         let weekdayshortname = this.weekdayshort.map(day => {
-            return <th key={day}>{day}</th>;
+            console.log(day)
+            return <th
+                className={'week-day'}
+                key={day}><span>{day}</span></th>;
         });
         let blanks = [];
         for (let i = 0; i < this.firstDayOfMonth(); i++) {
@@ -282,17 +305,19 @@ class Calendar extends React.Component {
             daysInMonth.push(
                 <td
                     style={{
+                        width: '10%',
                         paddingRight: 5,
                         paddingLeft: 5,
                         border: 1,
                         borderColor: "red",
                     }}
                     key={d}>
-                    <Box
+                    <Grid
+                        container
+                        direction={"column"}
+                        alignItems={"center"}
                         style={{
-                            minHeight: 100,
-                            height: "auto",
-                            width: 150,
+                            height: '100%',
                             borderColor: "black",
                             border: 2
                         }}
@@ -301,7 +326,11 @@ class Calendar extends React.Component {
                         }}
                     >
                         <span>{d}</span>
-                        <p>
+                        <p
+                            style={{
+                                width: "auto"
+                            }}
+                        >
                             {
                                 currentMonthEvents.map(event => {
                                     switch (this.state.filter) {
@@ -356,7 +385,7 @@ class Calendar extends React.Component {
                                 })
                             }
                         </p>
-                    </Box>
+                    </Grid>
                 </td>
             );
         }
@@ -385,16 +414,9 @@ class Calendar extends React.Component {
 
         return (
             <>
-                <Grid
-                    container
-                    direction={"row"}
-                >
+                <Grid className={'main-grid'}>
                     <Grid
-                        style={{
-                            width: '10%'
-                        }}
-                        container
-                        direction={"column"}
+                        className={'view-buttons-grid'}
                     >
                         {this.props.state.isAuth &&
                         <>
@@ -429,7 +451,7 @@ class Calendar extends React.Component {
                         }
                     </Grid>
 
-                    <Container>
+                    <Container className={'calendar-container'}>
                         {this.state.redirectToSingleDay && <Redirect to={'/singleDayEvents'}/>}
                         <div className="tail-datetime-calendar">
                             <div className="calendar-navi">
@@ -469,18 +491,18 @@ class Calendar extends React.Component {
 
                             {this.state.showDateTable && (
                                 <div className="calendar-date">
-                                    <table
+                                    <Table
                                         cellpadding="10"
                                         rules="rows"
                                         border="1"
                                         width="80%"
                                         className="calendar-day"
                                     >
-                                        <thead>
+                                        <TableHead>
                                         <tr>{weekdayshortname}</tr>
-                                        </thead>
-                                        <tbody>{daysinmonth}</tbody>
-                                    </table>
+                                        </TableHead>
+                                        <TableBody>{daysinmonth}</TableBody>
+                                    </Table>
                                 </div>
                             )}
                         </div>
