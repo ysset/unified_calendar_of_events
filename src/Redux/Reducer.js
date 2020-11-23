@@ -9,7 +9,7 @@ const initialState = {
         fullName: 'Lutskii Daniil',
         userPhone: '8(914)-000-0000'
     },
-    isAuth: true
+    isAuth: false
 }
 
 export default function reducer(state = initialState, action) {
