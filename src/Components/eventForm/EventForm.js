@@ -206,6 +206,7 @@ function EventForm(props) {
         events.push({
             userEmail: state.userEmail,
             title: state.title,
+            eventStatus: 'Pending',
             start: `${state.startDate}T${state.startTime}`,
             end: `${state.finishDate}T${state.finishTime}`,
             type: 'culture',

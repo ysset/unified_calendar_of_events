@@ -65,7 +65,7 @@ function ButtonAppBar(props) {
                                     color: '#fff',
                                     textDecoration: 'none',
                                 }}
-                            > EventForm </NavLink>
+                            > Добавить мероприятие </NavLink>
                         </Button>
                     }
                 </Toolbar>
